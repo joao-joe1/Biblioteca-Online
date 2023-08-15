@@ -2,6 +2,7 @@
 import { Post, Controller, Body, ConflictException } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { CreateUserDTO } from './user-dtos/createuser.dto';
+import { hash } from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
@@ -20,11 +21,13 @@ export class UsuarioController {
                 throw new ConflictException('Este email já está sendo usado.')
             }
 
+            const hashedPassword = await hash(dadosDoUsuario.password, 8)
+
             const novoUsuario = await prisma.users.create({
                 data: {
                     name: dadosDoUsuario.name,
                     email: dadosDoUsuario.email,
-                    password: dadosDoUsuario.password,
+                    password: hashedPassword,
                     admin: dadosDoUsuario.admin || false,
                     telefone: dadosDoUsuario.telefone,
                     rua: dadosDoUsuario.rua,

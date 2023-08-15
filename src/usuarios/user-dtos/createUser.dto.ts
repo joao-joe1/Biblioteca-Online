@@ -1,4 +1,5 @@
-import { IsString, IsNotEmpty, IsEmail, MinLength, IsPhoneNumber, IsPostalCode } from "class-validator";
+import { IsString, IsNotEmpty, IsEmail, MinLength, IsPhoneNumber, IsPostalCode, Validate, MaxLength } from "class-validator";
+import { PhoneNumberValidator } from "../phonevalidator.controller";
 
 export class CreateUserDTO {
 
@@ -15,7 +16,12 @@ export class CreateUserDTO {
 
     admin: boolean = false
 
+    @IsNotEmpty()
+    @MaxLength(14, { message: 'Número inválido.' })
     @IsPhoneNumber('BR', { message: 'Informe um número de telefone válido.' })
+    @Validate(PhoneNumberValidator, {
+        message: 'Informe um número de telefone válido no formato (DDD) XXXX-XXXX.'
+    })
     telefone: string
 
     @IsString()
