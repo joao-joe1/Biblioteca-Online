@@ -21,5 +21,3 @@ Um sistema de biblioteca online desenvolvido usando Prisma, NestJS e TypeScript.
 - [Prisma](https://www.prisma.io/): ORM (Object-Relational Mapping) moderno para Node.js e TypeScript, facilitando o acesso ao banco de dados.
 
 - [TypeScript](https://www.typescriptlang.org/): Linguagem que adiciona tipagem estática ao JavaScript, proporcionando maior robustez ao código.
-
-- [Frontend Framework (opcional)]: Escolha um framework como React, Angular ou Vue.js para construir a interface do usuário interativa e amigável.
