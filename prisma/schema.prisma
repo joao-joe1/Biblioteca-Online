@@ -29,8 +29,7 @@ model Users {
 model Livros {
   id                    String   @id @default(uuid())
   titulo                String
-  auto                  String
-  isbn                  String   @unique
+  autor                 String
   descricao             String
   genero                String
   capa_url              String // URL para a imagem da capa
