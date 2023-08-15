@@ -31,9 +31,9 @@
 <!-- Tecnologias Utilizadas -->
 ## 🛠️ Tecnologias Utilizadas
 
-- [![NestJS](https://link-para-logo-nestjs.com)](https://nestjs.com/): Framework de desenvolvimento para Node.js que permite a construção de aplicações backend escaláveis e eficientes.
-- [![Prisma](https://link-para-logo-prisma.com)](https://www.prisma.io/): ORM (Object-Relational Mapping) moderno para Node.js e TypeScript, facilitando o acesso ao banco de dados.
-- [![TypeScript](https://link-para-logo-typescript.com)](https://www.typescriptlang.org/): Linguagem que adiciona tipagem estática ao JavaScript, proporcionando maior robustez ao código.
+- ![NestJS](https://img.shields.io/badge/-NestJS-ff6600?style=flat-square&logo=nestjs&logoColor=ffffff): Framework de desenvolvimento para Node.js que permite a construção de aplicações backend escaláveis e eficientes.
+- ![Prisma](https://img.shields.io/badge/-Prisma-1b222d?style=flat-square&logo=prisma&logoColor=42e6b8): ORM (Object-Relational Mapping) moderno para Node.js e TypeScript, facilitando o acesso ao banco de dados.
+- ![TypeScript](https://img.shields.io/badge/-TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=ffffff): Linguagem que adiciona tipagem estática ao JavaScript, proporcionando maior robustez ao código.
 
 <!-- Instalação e Configuração -->
 ## 📝 Instalação e Configuração
