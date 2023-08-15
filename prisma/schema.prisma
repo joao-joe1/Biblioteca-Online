@@ -13,9 +13,40 @@ datasource db {
 model Users {
   id         String   @id @default(uuid())
   name       String
-  email      String
+  email      String   @unique
   password   String
-  admin      Boolean
+  admin      Boolean  @default(false)
+  telefone   String   @unique
+  cep        String
+  rua        String
+  bairro     String
+  cidade     String
+  estado     String   @default("MG")
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
+}
+
+model Livros {
+  id                    String   @id @default(uuid())
+  titulo                String
+  auto                  String
+  isbn                  String   @unique
+  descricao             String
+  genero                String
+  capa_url              String // URL para a imagem da capa
+  quantidade_disponivel Int
+  quantidade_total      Int
+  classificacao         Float // Pode ser um valor de 0 a 10, por exemplo
+  data_aquisicao        DateTime @default(now())
+
+  emprestimos Emprestimo[]
+}
+
+model Emprestimo {
+  id             Int       @id @default(autoincrement())
+  data_retirada  DateTime  @default(now())
+  data_devolucao DateTime?
+  livro          Livros    @relation(fields: [livroId], references: [id])
+  livroId        String
+  aluno          String // Nome do aluno que fez o empréstimo
 }
