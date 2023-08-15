@@ -13,14 +13,14 @@ export class AdminCheckMiddleware implements NestMiddleware {
                 where: { id: user_id }
             })
             if (!user || !user.admin) {
-                return response.status(403).json({
+                return res.status(403).json({
                     error: 'Não autorizado. Somente administradores podem acessar esta rota.'
                 })
             }
             next();
         } catch (error) {
             console.error(error)
-            return response.status(500).json({
+            return res.status(500).json({
                 error: 'Erro ao verificar status de administrador.'
             })
         }

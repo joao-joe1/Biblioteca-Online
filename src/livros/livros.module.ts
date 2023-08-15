@@ -1,8 +1,9 @@
 import { Module } from "@nestjs/common";
-// import { LivroController } from "./livros.controller";
+import { LivroController } from "./livros.controller";
+import { BuscaLivroController } from "./busca-livros.controller";
 
 @Module({
-    controllers: [],
+    controllers: [LivroController, BuscaLivroController],
 })
 
 export class LivroModule { }

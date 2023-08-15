@@ -11,9 +11,9 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(ApiTokenCheckMiddleware)
-      .forRoutes('livros')
+      .forRoutes('livros', 'buscalivros')
 
       .apply(AdminCheckMiddleware)
-      .forRoutes('livros')
+      .forRoutes('livros', 'buscalivros')
   }
 }
