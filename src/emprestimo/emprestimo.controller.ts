@@ -5,7 +5,7 @@ import { addDays } from "date-fns";
 
 const prisma = new PrismaClient()
 
-@Controller('emprestimos')
+@Controller('/emprestimos')
 export class EmprestimoController {
     @Post()
     async registroLivroPendente(@Body() dadosEmprestimo: EmprestimoDTO) {

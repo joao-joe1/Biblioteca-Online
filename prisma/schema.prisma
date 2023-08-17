@@ -46,7 +46,9 @@ model Emprestimo {
   id             Int       @id @default(autoincrement())
   data_retirada  DateTime  @default(now())
   data_devolucao DateTime?
+  data_entregue  DateTime?
   livro          Livros    @relation(fields: [livroId], references: [id])
   livroId        String
   aluno          String // Nome do aluno que fez o empréstimo
+  entregue       Boolean   @default(false)
 }

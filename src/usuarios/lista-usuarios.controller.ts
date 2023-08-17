@@ -3,7 +3,7 @@ import { Controller, Get } from "@nestjs/common";
 
 const prisma = new PrismaClient();
 
-@Controller('listausuarios')
+@Controller('/listausuarios')
 export class ListaUsuarioController {
     @Get()
     async listUsuarios() {

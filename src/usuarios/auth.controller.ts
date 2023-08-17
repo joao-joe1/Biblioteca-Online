@@ -18,7 +18,7 @@ export class AuthenticateUsuarioController {
     @Post()
     async authUsuario(@Body() dadosDoUsuario: IAuthRequest) {
 
-        const userExists = await prisma.users.findUnique({
+        const userExists = await prisma.users.findFirst({
             where: {
                 email: dadosDoUsuario.email
             }

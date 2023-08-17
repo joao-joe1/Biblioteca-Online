@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-@Controller('livros')
+@Controller('/livros')
 export class BuscaLivroController {
     @Get()
     async BuscarLivros() {
