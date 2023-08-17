@@ -1,22 +1,15 @@
-import { Controller, Body, Post } from '@nestjs/common'
-import axios from 'axios'
+import { Controller, Body, Get } from '@nestjs/common'
+import { PrismaClient } from '@prisma/client';
 
-interface ITitleRequest {
-    title: string
-}
+const prisma = new PrismaClient();
 
-const APIGoogle = process.env.APIGOOGLE
-
-@Controller('/buscalivros')
+@Controller('livros')
 export class BuscaLivroController {
-    @Post()
-    async BuscarLivros(@Body() buscaLivro: ITitleRequest) {
+    @Get()
+    async BuscarLivros() {
         try {
-            const fetchApi = `https://www.googleapis.com/books/v1/volumes?q=${buscaLivro.title}&key=${APIGoogle}`
-            const response = await axios.get(fetchApi)
-            const books = response.data.items;
-
-            return { books: books }
+            const buscaLivros = await prisma.livros.findMany()
+            return { books: buscaLivros }
         } catch (error) {
             throw error;
         }

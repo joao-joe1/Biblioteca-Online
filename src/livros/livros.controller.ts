@@ -4,7 +4,7 @@ import { CreateBookDTO } from "./books-dtos/createBooks.dto";
 
 const prisma = new PrismaClient();
 
-@Controller('/livros')
+@Controller('/cadastralivros')
 export class LivroController {
     @Post()
     async cadastrarLivro(@Body() dadosLivros: CreateBookDTO) {

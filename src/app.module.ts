@@ -3,17 +3,18 @@ import { UsuarioModule } from './usuarios/usuario.module';
 import { LivroModule } from './livros/livros.module';
 import { ApiTokenCheckMiddleware } from './middlewares/api-token-check.middleware';
 import { AdminCheckMiddleware } from './middlewares/admin-check.middleware';
+import { LivrosPendenteModule } from './emprestimo/livros-pendente.module';
 
 @Module({
-  imports: [UsuarioModule, LivroModule],
+  imports: [UsuarioModule, LivroModule, LivrosPendenteModule],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(ApiTokenCheckMiddleware)
-      .forRoutes('livros', 'buscalivros')
+      .forRoutes('livros', 'cadastralivros', 'listausuarios')
 
       .apply(AdminCheckMiddleware)
-      .forRoutes('livros', 'buscalivros')
+      .forRoutes('cadastralivros', 'listausuarios')
   }
 }
