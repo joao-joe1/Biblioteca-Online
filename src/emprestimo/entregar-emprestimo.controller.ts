@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 
 
 const prisma = new PrismaClient();
-
+/* Entregar livro */
 @Controller('/emprestimoentregue')
 export class EmprestimoEntregueController {
 
