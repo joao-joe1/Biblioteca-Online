@@ -1,16 +1,15 @@
 import { PrismaClient } from "@prisma/client";
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Post, HttpException, HttpStatus } from "@nestjs/common";
 import { CreateBookDTO } from "./books-dtos/createBooks.dto";
-
-const prisma = new PrismaClient();
 
 @Controller('/cadastralivros')
 export class LivroController {
+    constructor(private readonly prisma: PrismaClient) { }
+
     @Post()
     async cadastrarLivro(@Body() dadosLivros: CreateBookDTO) {
         try {
-
-            const createBook = await prisma.livros.create({
+            const createBook = await this.prisma.livros.create({
                 data: {
                     titulo: dadosLivros.titulo,
                     autor: dadosLivros.autor,
@@ -21,11 +20,12 @@ export class LivroController {
                     quantidade_total: dadosLivros.quantidade_total,
                     classificacao: dadosLivros.classificacao
                 }
+            });
 
-            })
-            return { message: 'Livro criado com sucesso!', data: createBook }
+            return { message: 'Livro criado com sucesso!', data: createBook };
         } catch (error) {
-            return { message: 'Erro ao cadastrar um livro!', error: error }
+            console.error('Ocorreu um erro:', error);
+            throw new HttpException('Erro ao cadastrar um livro!', HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
