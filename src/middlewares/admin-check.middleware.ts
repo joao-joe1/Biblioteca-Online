@@ -1,15 +1,16 @@
-import { NestMiddleware } from "@nestjs/common";
-import { Request, Response, NextFunction, response } from 'express';
+import { Injectable, NestMiddleware } from "@nestjs/common";
+import { Request, Response, NextFunction } from 'express';
 import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
-
+@Injectable()
 export class AdminCheckMiddleware implements NestMiddleware {
+    constructor(private readonly prisma: PrismaClient) { }
+
     async use(req: Request, res: Response, next: NextFunction) {
 
         const { user_id } = req
         try {
-            const user = await prisma.users.findUnique({
+            const user = await this.prisma.users.findUnique({
                 where: { id: user_id }
             })
             if (!user || !user.admin) {
