@@ -4,9 +4,10 @@ import { ListaEmprestimoController } from "./lista-emprestimos.controller";
 import { EmprestimoEntregueController } from "./entregar-emprestimo.controller";
 import { EmprestimoEntreguesController } from "./emprestimo-entregues.controller";
 import { EmprestimoPendentesController } from "./emprestimo-pendentes.controller";
+import { DeletarEmprestimoController } from "./deletar-emprestimo.controller";
 
 @Module({
-    controllers: [EmprestimoController, ListaEmprestimoController, EmprestimoEntregueController],
+    controllers: [EmprestimoController, ListaEmprestimoController, EmprestimoEntregueController, DeletarEmprestimoController],
 })
 
 export class LivrosPendenteModule { }

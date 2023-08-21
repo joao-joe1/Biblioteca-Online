@@ -1,9 +1,9 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Post, HttpException, HttpStatus } from "@nestjs/common";
 import { PrismaClient } from "@prisma/client";
 import { EmprestimoDTO } from "./emprestimo-dto/emprestimo.dto";
 import { addDays } from "date-fns";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 @Controller('/emprestimos')
 export class EmprestimoController {
@@ -14,23 +14,24 @@ export class EmprestimoController {
                 where: {
                     titulo: dadosEmprestimo.nomeLivro
                 }
-            })
+            });
 
             if (!livro) {
-                return { message: 'Livro não encontrado!' }
+                throw new HttpException('Livro não encontrado!', HttpStatus.NOT_FOUND);
             }
+
             if (livro.quantidade_disponivel <= 0) {
-                return { message: 'Livro indisponível para empréstimo.' }
+                throw new HttpException('Livro indisponível para empréstimo.', HttpStatus.BAD_REQUEST);
             }
 
             const user = await prisma.users.findUnique({
                 where: {
                     code: dadosEmprestimo.alunoCode
                 }
-            })
+            });
 
             if (!user) {
-                return { message: 'Aluno não encontrado!' }
+                throw new HttpException('Aluno não encontrado!', HttpStatus.NOT_FOUND);
             }
 
             const dataDevolucao = addDays(new Date(), 7);
@@ -48,12 +49,13 @@ export class EmprestimoController {
                 data: {
                     quantidade_disponivel: livro.quantidade_disponivel - 1,
                 }
-            })
+            });
+
             return { message: 'Empréstimo realizado com sucesso!', data: emprestimo };
 
         } catch (error) {
             console.error('Ocorreu um erro:', error);
-            return { message: 'Ocorreu um erro ao processar a solicitação.', error: error };
+            throw new HttpException('Ocorreu um erro ao processar a solicitação.', HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
