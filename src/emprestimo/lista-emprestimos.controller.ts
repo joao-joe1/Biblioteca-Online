@@ -53,25 +53,25 @@ class EmprestimoDTO {
 export class ListaEmprestimoController {
     @Get()
     async listaEmprestimo() {
-        const emprestimos = await prisma.emprestimo.findMany();
-
-        const emprestimosEntregues = await prisma.emprestimo.findMany({
-            where: {
-                entregue: true
-            },
-            include: {
-                livro: true
-            }
-        });
-
-        const emprestimosPendentes = await prisma.emprestimo.findMany({
-            where: {
-                entregue: false
-            },
-            include: {
-                livro: true
-            }
-        });
+        const [emprestimos, emprestimosEntregues, emprestimosPendentes] = await Promise.all([
+            prisma.emprestimo.findMany(),
+            prisma.emprestimo.findMany({
+                where: {
+                    entregue: true
+                },
+                include: {
+                    livro: true
+                }
+            }),
+            prisma.emprestimo.findMany({
+                where: {
+                    entregue: false
+                },
+                include: {
+                    livro: true
+                }
+            })
+        ]);
 
         const exposedEmprestimos = emprestimos.map(emprestimo => new EmprestimoDTO(emprestimo));
         const exposedEmprestimosEntregues = emprestimosEntregues.map(emprestimoEntregue => new EmprestimoDTO(emprestimoEntregue))
