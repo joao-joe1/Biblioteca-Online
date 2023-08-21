@@ -1,19 +1,18 @@
 /* eslint-disable prettier/prettier */
-import { Post, Controller, Body, ConflictException } from '@nestjs/common';
+import { Post, Controller, Body, ConflictException, HttpStatus, HttpException } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { CreateUserDTO } from './user-dtos/createuser.dto';
 import { hash, genSalt } from 'bcryptjs';
 
-const prisma = new PrismaClient();
-
 @Controller('/usuarios')
 export class UsuarioController {
+    constructor(private readonly prisma: PrismaClient) { }
 
     @Post()
     async criaUsuario(@Body() dadosDoUsuario: CreateUserDTO) {
 
         try {
-            const existingUser = await prisma.users.findUnique({
+            const existingUser = await this.prisma.users.findUnique({
                 where: { email: dadosDoUsuario.email }
             })
 
@@ -26,7 +25,7 @@ export class UsuarioController {
 
             const hashedPassword = await hash(dadosDoUsuario.password, salt)
 
-            const novoUsuario = await prisma.users.create({
+            const novoUsuario = await this.prisma.users.create({
                 data: {
                     name: dadosDoUsuario.name,
                     email: dadosDoUsuario.email,
@@ -41,7 +40,14 @@ export class UsuarioController {
             })
             return { message: 'Usuário criado com sucesso!', data: novoUsuario }
         } catch (error) {
-            return { message: 'Erro ao cadastrar um usuário!', error: error }
+            throw new HttpException(
+                {
+                    status: HttpStatus.INTERNAL_SERVER_ERROR,
+                    error: 'Erro ao cadastrar um usuário!',
+                    message: error.message,
+                },
+                HttpStatus.INTERNAL_SERVER_ERROR,
+            );
         }
     }
 }

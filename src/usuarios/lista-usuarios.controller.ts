@@ -1,14 +1,15 @@
 import { PrismaClient } from "@prisma/client";
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, HttpException, HttpStatus } from "@nestjs/common";
 
-const prisma = new PrismaClient();
 
 @Controller('/listausuarios')
 export class ListaUsuarioController {
+    constructor(private readonly prisma: PrismaClient) { }
+
     @Get()
     async listUsuarios() {
         try {
-            const listUsuarios = await prisma.users.findMany({
+            const listUsuarios = await this.prisma.users.findMany({
                 select: {
                     id: true,
                     email: true,
@@ -24,7 +25,14 @@ export class ListaUsuarioController {
             })
             return { data: listUsuarios }
         } catch (error) {
-            throw error
+            throw new HttpException(
+                {
+                    status: HttpStatus.INTERNAL_SERVER_ERROR,
+                    error: 'Erro ao listar os usuários!',
+                    message: error.message,
+                },
+                HttpStatus.INTERNAL_SERVER_ERROR,
+            );
         }
     }
 }
