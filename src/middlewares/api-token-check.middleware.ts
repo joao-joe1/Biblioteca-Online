@@ -1,16 +1,17 @@
-import { NestMiddleware } from "@nestjs/common";
+import { Injectable, NestMiddleware } from "@nestjs/common";
 import { Request, Response, NextFunction } from 'express';
 import { verify } from "jsonwebtoken";
 
-
-interface InterfaceAuthMiddleware {
+interface AuthPayload {
     sub: string
 }
 
+@Injectable()
 export class ApiTokenCheckMiddleware implements NestMiddleware {
-    use(req: Request, res: Response, next: NextFunction) {
 
-        const JWT_SECRET = process.env.JWT_SECRET as string
+    private readonly JWT_SECRET: string = process.env.JWT_SECRET || "";
+
+    use(req: Request, res: Response, next: NextFunction) {
         const authToken = req.headers.authorization as string
 
         if (!authToken) {
@@ -22,8 +23,8 @@ export class ApiTokenCheckMiddleware implements NestMiddleware {
         const token = authToken.split(' ')[1]
 
         try {
-            const { sub } = verify(token, JWT_SECRET) as InterfaceAuthMiddleware;
-            req.user_id = sub;
+            const decodedToken = verify(token, this.JWT_SECRET) as AuthPayload;
+            req.user_id = decodedToken.sub;
             next();
         } catch (error) {
             return res.status(401).json({
