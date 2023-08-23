@@ -1,5 +1,4 @@
 import { Controller, Delete, InternalServerErrorException, NotFoundException, Param } from "@nestjs/common";
-import { id } from "date-fns/locale";
 import { PrismaService } from "src/prisma/prisma.service";
 
 @Controller('/livros')
