@@ -1,7 +1,7 @@
 import { Controller, Delete, InternalServerErrorException, NotFoundException, Param } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 
-@Controller('/livros')
+@Controller('livros')
 export class DeletarLivroController {
     constructor(private readonly prismaService: PrismaService) { }
 

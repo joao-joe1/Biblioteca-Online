@@ -1,10 +1,8 @@
 import { Module } from "@nestjs/common";
-import { EmprestimoController } from "./emprestimo.controller";
-import { ListaEmprestimoController } from "./lista-emprestimos.controller";
-import { EmprestimoEntregueController } from "./entregar-emprestimo.controller";
-import { EmprestimoEntreguesController } from "./emprestimo-entregues.controller";
-import { EmprestimoPendentesController } from "./emprestimo-pendentes.controller";
-import { DeletarEmprestimoController } from "./deletar-emprestimo.controller";
+import { EmprestimoController } from "./controllers/emprestimo.controller";
+import { ListaEmprestimoController } from "./controllers/lista-emprestimos.controller";
+import { EmprestimoEntregueController } from "./controllers/entregar-emprestimo.controller";
+import { DeletarEmprestimoController } from "./controllers/deletar-emprestimo.controller";
 
 @Module({
     imports: [EmprestimosModule],

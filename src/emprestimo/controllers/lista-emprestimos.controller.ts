@@ -50,7 +50,7 @@ class EmprestimoDTO {
 @Controller('emprestimo')
 export class ListaEmprestimoController {
     constructor(private readonly prismaService: PrismaService) { }
-    @Get()
+    @Get('emprestimos')
     async listaEmprestimo() {
         const [emprestimos, emprestimosEntregues, emprestimosPendentes] = await Promise.all([
             this.prismaService.emprestimo.findMany(),

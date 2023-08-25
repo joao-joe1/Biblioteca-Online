@@ -1,5 +1,5 @@
 import { Body, Controller, Post, HttpException, HttpStatus } from "@nestjs/common";
-import { EmprestimoDTO } from "./emprestimo-dto/emprestimo.dto";
+import { EmprestimoDTO } from "../emprestimo-dto/emprestimo.dto";
 import { addDays } from "date-fns";
 import { PrismaService } from "src/prisma/prisma.service";
 

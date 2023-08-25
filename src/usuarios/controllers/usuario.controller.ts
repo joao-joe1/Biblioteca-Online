@@ -1,13 +1,13 @@
 import { Post, Controller, Body, ConflictException, HttpStatus, HttpException } from '@nestjs/common';
-import { CreateUserDTO } from './user-dtos/createuser.dto';
+import { CreateUserDTO } from '../user-dtos/createuser.dto';
 import { hash, genSalt } from 'bcryptjs';
 import { PrismaService } from 'src/prisma/prisma.service';
 
-@Controller('/usuarios')
+@Controller('usuarios')
 export class UsuarioController {
     constructor(private readonly prismaService: PrismaService) { }
 
-    @Post()
+    @Post('cadastrar')
     async criaUsuario(@Body() dadosDoUsuario: CreateUserDTO) {
 
         try {

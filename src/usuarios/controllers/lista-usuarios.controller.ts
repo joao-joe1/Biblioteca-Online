@@ -2,11 +2,11 @@ import { Controller, Get, HttpException, HttpStatus } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 
 
-@Controller('/listausuarios')
+@Controller('usuarios')
 export class ListaUsuarioController {
     constructor(private readonly prismaService: PrismaService) { }
 
-    @Get()
+    @Get('lista')
     async listUsuarios() {
         try {
             const listUsuarios = await this.prismaService.users.findMany({

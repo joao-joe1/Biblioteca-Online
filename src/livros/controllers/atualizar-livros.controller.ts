@@ -1,7 +1,7 @@
 import { Body, Controller, InternalServerErrorException, NotFoundException, Param, Put } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 
-@Controller('/livros')
+@Controller('livros')
 export class AtulizarLivroController {
     constructor(private readonly prismaService: PrismaService) { }
 

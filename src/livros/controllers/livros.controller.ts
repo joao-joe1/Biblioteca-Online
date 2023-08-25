@@ -1,12 +1,12 @@
 import { Body, Controller, Post, HttpException, HttpStatus } from "@nestjs/common";
-import { CreateBookDTO } from "./books-dtos/createBooks.dto";
+import { CreateBookDTO } from "../books-dtos/createBooks.dto";
 import { PrismaService } from "src/prisma/prisma.service";
 
-@Controller('/livros')
+@Controller('livros')
 export class LivroController {
     constructor(private readonly prismaService: PrismaService) { }
 
-    @Post()
+    @Post('cadastrar')
     async cadastrarLivro(@Body() dadosLivros: CreateBookDTO) {
         try {
             const createBook = await this.prismaService.livros.create({

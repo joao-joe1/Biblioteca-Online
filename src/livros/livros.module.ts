@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
-import { LivroController } from "./livros.controller";
-import { BuscaLivroController } from "./busca-livros.controller";
-import { DeletarLivroController } from "./deletar-livros.controller";
-import { AtulizarLivroController } from "./atualizar-livros.controller";
+import { LivroController } from "./controllers/livros.controller";
+import { BuscaLivroController } from "./controllers/busca-livros.controller";
+import { DeletarLivroController } from "./controllers/deletar-livros.controller";
+import { AtulizarLivroController } from "./controllers/atualizar-livros.controller";
 
 @Module({
     imports: [LivroModule],
