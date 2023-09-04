@@ -1,10 +1,12 @@
-import { Body, Controller, InternalServerErrorException, NotFoundException, Param, Put } from "@nestjs/common";
+import { Body, Controller, InternalServerErrorException, NotFoundException, Param, Put, UseGuards } from "@nestjs/common";
+import { AdminCheckGuard } from "src/guards/admin-check.guard";
 import { PrismaService } from "src/prisma/prisma.service";
 
 @Controller('livros')
 export class AtulizarLivroController {
     constructor(private readonly prismaService: PrismaService) { }
 
+    @UseGuards(AdminCheckGuard)
     @Put(':id/atualizar')
     async atualizarLivro(@Param('id') id: string, @Body() livroData: any) {
         try {

@@ -1,4 +1,5 @@
-import { Controller, Get } from '@nestjs/common'
+import { Controller, Get, UseGuards } from '@nestjs/common'
+import { JwtAuthGuard } from 'src/guards/api-token-check.guard';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 
@@ -6,6 +7,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class BuscaLivroController {
     constructor(private readonly prismaService: PrismaService) { }
 
+    @UseGuards(JwtAuthGuard)
     @Get('lista')
     async BuscarLivros() {
         try {

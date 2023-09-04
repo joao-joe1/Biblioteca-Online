@@ -1,10 +1,12 @@
-import { Controller, NotFoundException, Param, ParseIntPipe, Put } from "@nestjs/common";
+import { Controller, NotFoundException, Param, ParseIntPipe, Put, UseGuards } from "@nestjs/common";
+import { AdminCheckGuard } from "src/guards/admin-check.guard";
 import { PrismaService } from "src/prisma/prisma.service";
 
 @Controller('/emprestimo')
 export class EmprestimoEntregueController {
     constructor(private readonly prismaService: PrismaService) { }
 
+    @UseGuards(AdminCheckGuard)
     @Put(':id/entregar')
     async confirmarEntrega(@Param('id', ParseIntPipe) id: number) {
         try {

@@ -1,13 +1,15 @@
-import { Body, Controller, Post, HttpException, HttpStatus } from "@nestjs/common";
+import { Body, Controller, Post, HttpException, HttpStatus, UseGuards } from "@nestjs/common";
 import { CreateBookDTO } from "../books-dtos/createBooks.dto";
 import { PrismaService } from "src/prisma/prisma.service";
+import { AdminCheckGuard } from "src/guards/admin-check.guard";
 
 @Controller('livros')
 export class LivroController {
     constructor(private readonly prismaService: PrismaService) { }
 
+    @UseGuards(AdminCheckGuard)
     @Post('cadastrar')
-    async cadastrarLivro(@Body() dadosLivros: CreateBookDTO) {
+    async cadastrarLivro(@Body() dadosLivros: CreateBookDTO): Promise<{ message: string; data: { id: string; titulo: string; autor: string; descricao: string; genero: string; capa_url: string; quantidade_disponivel: number; quantidade_total: number; classificacao: number; data_aquisicao: Date; }; }> {
         try {
             const createBook = await this.prismaService.livros.create({
                 data: {

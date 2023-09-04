@@ -1,6 +1,6 @@
 import { Controller, Get, HttpException, HttpStatus, UseGuards } from "@nestjs/common";
-import { AdminCheckGuard } from "src/middlewares/admin-check.guard";
-import { JwtAuthGuard } from "src/middlewares/api-token-check.guard";
+import { AdminCheckGuard } from "src/guards/admin-check.guard";
+import { JwtAuthGuard } from "src/guards/api-token-check.guard";
 import { PrismaService } from "src/prisma/prisma.service";
 
 

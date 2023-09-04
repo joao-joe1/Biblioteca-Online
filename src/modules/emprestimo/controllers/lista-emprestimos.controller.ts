@@ -1,5 +1,6 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, UseGuards } from "@nestjs/common";
 import { Expose, classToPlain } from "class-transformer";
+import { AdminCheckGuard } from "src/guards/admin-check.guard";
 import { PrismaService } from "src/prisma/prisma.service";
 
 class EmprestimoDTO {
@@ -50,6 +51,7 @@ class EmprestimoDTO {
 @Controller('emprestimo')
 export class ListaEmprestimoController {
     constructor(private readonly prismaService: PrismaService) { }
+    @UseGuards(AdminCheckGuard)
     @Get('emprestimos')
     async listaEmprestimo() {
         const [emprestimos, emprestimosEntregues, emprestimosPendentes] = await Promise.all([

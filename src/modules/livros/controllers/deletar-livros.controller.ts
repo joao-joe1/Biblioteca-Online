@@ -1,10 +1,12 @@
-import { Controller, Delete, InternalServerErrorException, NotFoundException, Param } from "@nestjs/common";
+import { Controller, Delete, InternalServerErrorException, NotFoundException, Param, UseGuards } from "@nestjs/common";
+import { AdminCheckGuard } from "src/guards/admin-check.guard";
 import { PrismaService } from "src/prisma/prisma.service";
 
 @Controller('livros')
 export class DeletarLivroController {
     constructor(private readonly prismaService: PrismaService) { }
 
+    @UseGuards(AdminCheckGuard)
     @Delete(':id/deletar')
     async deletarLivro(@Param('id') id: string) {
         try {

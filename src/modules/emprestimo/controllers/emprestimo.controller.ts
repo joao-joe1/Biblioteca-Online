@@ -1,12 +1,14 @@
-import { Body, Controller, Post, HttpException, HttpStatus } from "@nestjs/common";
+import { Body, Controller, Post, HttpException, HttpStatus, UseGuards } from "@nestjs/common";
 import { EmprestimoDTO } from "../emprestimo-dto/emprestimo.dto";
 import { addDays } from "date-fns";
 import { PrismaService } from "src/prisma/prisma.service";
+import { AdminCheckGuard } from "src/guards/admin-check.guard";
 
 
 @Controller('/emprestimo')
 export class EmprestimoController {
     constructor(private readonly prismaService: PrismaService) { }
+    @UseGuards(AdminCheckGuard)
     @Post()
     async registroLivroPendente(@Body() dadosEmprestimo: EmprestimoDTO) {
         try {
