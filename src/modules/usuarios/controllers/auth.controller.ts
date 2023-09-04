@@ -13,7 +13,6 @@ const JWT_SECRET = process.env.JWT_SECRET
 @Controller('/login')
 export class AuthenticateUsuarioController {
     constructor(private readonly prismaService: PrismaService) { }
-
     @Post()
     async authUsuario(@Body() dadosDoUsuario: IAuthRequest) {
 

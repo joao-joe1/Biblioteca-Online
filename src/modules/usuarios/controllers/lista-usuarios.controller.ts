@@ -1,11 +1,13 @@
-import { Controller, Get, HttpException, HttpStatus } from "@nestjs/common";
+import { Controller, Get, HttpException, HttpStatus, UseGuards } from "@nestjs/common";
+import { AdminCheckGuard } from "src/middlewares/admin-check.guard";
+import { JwtAuthGuard } from "src/middlewares/api-token-check.guard";
 import { PrismaService } from "src/prisma/prisma.service";
 
 
-@Controller('usuarios')
+@Controller('usuario')
 export class ListaUsuarioController {
     constructor(private readonly prismaService: PrismaService) { }
-
+    @UseGuards(AdminCheckGuard)
     @Get('lista')
     async listUsuarios() {
         try {
@@ -20,7 +22,8 @@ export class ListaUsuarioController {
                     bairro: true,
                     cidade: true,
                     created_at: true,
-                    updated_at: true
+                    updated_at: true,
+                    code: true
                 }
             })
             return { data: listUsuarios }

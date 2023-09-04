@@ -1,22 +1,11 @@
 import { Module, NestModule, MiddlewareConsumer, Global } from '@nestjs/common';
-import { UsuarioModule } from './usuarios/usuario.module';
-import { LivroModule } from './livros/livros.module';
-import { ApiTokenCheckMiddleware } from './middlewares/api-token-check.middleware';
-import { AdminCheckMiddleware } from './middlewares/admin-check.middleware';
-import { EmprestimosModule } from './emprestimo/emprestimos.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { EmprestimosModule } from './modules/emprestimo/emprestimos.module';
+import { LivroModule } from './modules/livros/livros.module';
+import { UsuarioModule } from './modules/usuarios/usuario.module';
 
 @Module({
   imports: [UsuarioModule, LivroModule, EmprestimosModule, PrismaModule],
 })
 
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(ApiTokenCheckMiddleware)
-      .forRoutes('livros', 'usuarios', 'emprestimo')
-
-      .apply(AdminCheckMiddleware)
-      .forRoutes('cadastralivros', 'lista', 'emprestimo', 'livros')
-  }
-}
+export class AppModule { }

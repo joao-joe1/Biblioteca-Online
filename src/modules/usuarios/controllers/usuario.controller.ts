@@ -3,13 +3,12 @@ import { CreateUserDTO } from '../user-dtos/createuser.dto';
 import { hash, genSalt } from 'bcryptjs';
 import { PrismaService } from 'src/prisma/prisma.service';
 
-@Controller('usuarios')
+@Controller('cadastro')
 export class UsuarioController {
     constructor(private readonly prismaService: PrismaService) { }
 
-    @Post('cadastrar')
+    @Post()
     async criaUsuario(@Body() dadosDoUsuario: CreateUserDTO) {
-
         try {
             const existingUser = await this.prismaService.users.findUnique({
                 where: { email: dadosDoUsuario.email }

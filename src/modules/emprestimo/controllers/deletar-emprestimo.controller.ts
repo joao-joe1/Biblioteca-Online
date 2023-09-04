@@ -1,4 +1,4 @@
-import { Controller, Delete, Param, NotFoundException, InternalServerErrorException } from "@nestjs/common";
+import { Controller, Delete, Param, NotFoundException, InternalServerErrorException, ParseIntPipe } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 
 
@@ -7,11 +7,11 @@ export class DeletarEmprestimoController {
     constructor(private readonly prismaService: PrismaService) { }
 
     @Delete(':id/deletar')
-    async deletarEmprestimo(@Param('id') id: number) {
+    async deletarEmprestimo(@Param('id', ParseIntPipe) id: number) {
         try {
             const emprestimo = await this.prismaService.emprestimo.findUnique({
                 where: {
-                    id: Number(id),
+                    id: id,
                 },
             });
 
@@ -21,7 +21,7 @@ export class DeletarEmprestimoController {
 
             const deletaEmprestimo = await this.prismaService.emprestimo.delete({
                 where: {
-                    id: Number(id),
+                    id: id,
                 },
             });
 
