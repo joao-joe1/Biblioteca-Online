@@ -23,7 +23,7 @@ export class CreateUserDTO {
 
     // Número de telefone do usuário
     @IsNotEmpty()
-    @MaxLength(14, { message: 'Número inválido.' })
+    @MaxLength(15, { message: 'Número inválido.' })
     @IsPhoneNumber('BR', { message: 'Informe um número de telefone válido.' })
     @Validate(PhoneNumberValidator, {
         message: 'Informe um número de telefone válido no formato (DDD) XXXX-XXXX.'

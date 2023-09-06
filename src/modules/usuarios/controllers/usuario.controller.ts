@@ -1,4 +1,4 @@
-import { Post, Controller, Body, ConflictException, HttpStatus, HttpException } from '@nestjs/common';
+import { Post, Controller, Body, ConflictException, HttpStatus, HttpException, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CreateUserDTO } from '../user-dtos/createuser.dto';
 import { hash, genSalt } from 'bcryptjs';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -8,6 +8,7 @@ export class UsuarioController {
     constructor(private readonly prismaService: PrismaService) { }
 
     @Post()
+    @UsePipes(new ValidationPipe({ transform: true }))
     async criaUsuario(@Body() dadosDoUsuario: CreateUserDTO) {
         try {
             const existingUser = await this.prismaService.users.findUnique({
