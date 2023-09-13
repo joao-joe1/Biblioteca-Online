@@ -1,11 +1,11 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
 export class EmprestimoDTO {
-    @IsNotEmpty({ message: 'O nome do livro não pode estar vazio.' })
-    @IsString({ message: 'O nome do livro deve ser uma string.' })
+    @IsNotEmpty({ message: 'BookNameNotProvidedError' })
+    @IsString({ message: 'InvalidBookNameTypeError' })
     nomeLivro: string;
 
-    @IsNotEmpty({ message: 'O código do aluno não pode estar vazio.' })
-    @IsString({ message: 'O código do aluno deve ser uma string.' })
+    @IsNotEmpty({ message: 'StudentCodeNotProvidedError' })
+    @IsString({ message: 'InvalidStudentCodeTypeError' })
     alunoCode: number;
 }

@@ -14,7 +14,8 @@ export class EmprestimoController {
         try {
             const livro = await this.prismaService.livros.findFirst({
                 where: {
-                    titulo: dadosEmprestimo.nomeLivro
+                    titulo: dadosEmprestimo.nomeLivro,
+                    quantidade_disponivel: { gt: 0 }
                 }
             });
 

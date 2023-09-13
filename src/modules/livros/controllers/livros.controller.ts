@@ -11,7 +11,8 @@ export class LivroController {
     @Post('cadastrar')
     async cadastrarLivro(@Body() dadosLivros: CreateBookDTO): Promise<{ message: string; data: { id: string; titulo: string; autor: string; descricao: string; genero: string; capa_url: string; quantidade_disponivel: number; quantidade_total: number; classificacao: number; data_aquisicao: Date; }; }> {
         try {
-            const createBook = await this.prismaService.livros.create({
+
+            const data = await this.prismaService.livros.create({
                 data: {
                     titulo: dadosLivros.titulo,
                     autor: dadosLivros.autor,
@@ -24,7 +25,8 @@ export class LivroController {
                 }
             });
 
-            return { message: 'Livro criado com sucesso!', data: createBook };
+            console.log('creating books...', data)
+            return { message: 'Livro criado com sucesso!', data };
         } catch (error) {
             console.error('Ocorreu um erro:', error);
             throw new HttpException('Erro ao cadastrar um livro!', HttpStatus.INTERNAL_SERVER_ERROR);

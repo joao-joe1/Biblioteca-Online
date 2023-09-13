@@ -1,49 +1,46 @@
-import { IsString, IsNotEmpty, IsEmail, MinLength, IsBoolean, MaxLength, IsPhoneNumber, IsPostalCode, Validate, } from "class-validator";
+import { IsString, IsNotEmpty, IsEmail, MinLength, IsBoolean, MaxLength, IsPhoneNumber, IsPostalCode, Validate, Matches, Length, IsStrongPassword, IsNumber, } from "class-validator";
 import { PhoneNumberValidator } from "../controllers/phonevalidator.controller";
 
 export class CreateUserDTO {
-    // Nome do usuário (mínimo de 3 caracteres, por exemplo)
-    @IsString()
-    @IsNotEmpty({ message: 'O campo nome não pode estar vazio.' })
-    @MinLength(3, { message: 'O campo nome deve ter no mínimo 3 caracteres.' })
+    @IsNotEmpty({ message: 'NameNotProvidedError' })
+    @IsString({ message: "InvalidUsernameTypeError" })
+    @Length(3, 20, { message: "InvalidUsernameLengthError" })
+    @Matches(/^[a-zA-Z0-9_]{3,20}$/, { message: 'InvalidUsernameFormatError' })
     name: string;
 
-    // Endereço de e-mail do usuário
-    @IsEmail({}, { message: 'Informe um endereço de email válido.' })
-    @IsNotEmpty({ message: 'O campo email não pode estar vazio.' })
+    @IsEmail({}, { message: 'InvalidEmailError' })
+    @IsNotEmpty({ message: 'EmailNotProvidedError' })
     email: string;
 
-    // Senha do usuário (mínimo de 6 caracteres)
-    @MinLength(6, { message: 'A senha deve ter no mínimo 6 caracteres.' })
+    @IsNotEmpty({ message: 'NameNotProvidedError' })
+    // @IsStrongPassword({}, { message: "PasswordNotStrongEnoughError" })s
+    @Length(6, 70, { message: "InvalidPasswordLengthError" })
     password: string;
 
-    // Indicador de administração do usuário
-    @IsBoolean()
+    @IsBoolean({ message: 'InvalidAdminError' })
     admin: boolean = false;
 
-    // Número de telefone do usuário
-    @IsNotEmpty()
-    @MaxLength(15, { message: 'Número inválido.' })
-    @IsPhoneNumber('BR', { message: 'Informe um número de telefone válido.' })
+    @IsNotEmpty({ message: 'TelefoneNotProvidedError' })
+    @MaxLength(15, { message: 'InvalidPhoneNumberError' })
+    @IsPhoneNumber('BR', { message: 'InvalidPhoneNumberFormatError' })
     @Validate(PhoneNumberValidator, {
-        message: 'Informe um número de telefone válido no formato (DDD) XXXX-XXXX.'
+        message: 'InvalidPhoneNumberFormatError'
     })
     telefone: string;
 
-    // Rua do endereço do usuário
-    @IsString()
+    @IsNotEmpty({ message: 'EmailNotProvidedError' })
+    @IsString({ message: "InvalidUsernameTypeError" })
     rua: string;
 
-    // Bairro do endereço do usuário
-    @IsString()
+    @IsNotEmpty({ message: 'EmailNotProvidedError' })
+    @IsString({ message: "InvalidUsernameTypeError" })
     bairro: string;
 
-    // Cidade do endereço do usuário
-    @IsString()
+    @IsNotEmpty({ message: 'EmailNotProvidedError' })
+    @IsString({ message: "InvalidUsernameTypeError" })
     cidade: string;
 
-    // CEP do endereço do usuário
-    @IsPostalCode('BR', { message: 'Informe um CEP válido.' })
-    @IsNotEmpty({ message: 'O campo CEP não pode estar vazio.' })
+    @IsPostalCode('BR', { message: 'InvalidCepError' })
+    @IsNotEmpty({ message: 'CepNotProvidedError' })
     cep: string;
 }

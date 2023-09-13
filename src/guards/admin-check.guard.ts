@@ -1,5 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 import { verify } from "jsonwebtoken";
+import { AuthService } from "src/modules/usuarios/services/auth.service";
 import { PrismaService } from "src/prisma/prisma.service";
 
 interface AuthPayload {
@@ -10,7 +11,7 @@ interface AuthPayload {
 export class AdminCheckGuard implements CanActivate {
     private readonly JWT_SECRET: string = process.env.JWT_SECRET || "";
 
-    constructor(private readonly prismaService: PrismaService) { }
+    constructor(private readonly prismaService: PrismaService, private readonly authService: AuthService) { }
 
     async canActivate(context: ExecutionContext) {
 
@@ -22,6 +23,13 @@ export class AdminCheckGuard implements CanActivate {
         }
 
         const token = authToken.split(' ')[1];
+
+        const isTokenValid = this.authService.isTokenInvalid(token)
+
+        if (isTokenValid) {
+            console.log('token expirado.')
+            return false
+        }
 
         try {
             const decodedToken = verify(token, this.JWT_SECRET) as AuthPayload;
